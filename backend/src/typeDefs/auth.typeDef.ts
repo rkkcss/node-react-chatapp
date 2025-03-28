@@ -9,9 +9,14 @@ const authDef = `#graphql
         updatedAt: String!
     }
 
+    type AuthResponse {
+        message: String
+    }
+
     type Mutation {
-        login(email: String!, password: String!): String!
+        login(email: String!, password: String!): AuthResponse!
         register(name: String!, email: String!, password: String!): String!
+        logout: String!
     }
 
     type Query {
