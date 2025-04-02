@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'your_jwt_secret_key'; // Cseréld ki egy erősebb, biztonságos kulcsra!
+const JWT_SECRET = 'your-secret-key'; // Cseréld ki egy erősebb, biztonságos kulcsra!
 
 // Jelszó hashelése
 export const hashPassword = async (password: string): Promise<string> => {
@@ -14,8 +14,8 @@ export const comparePassword = async (password: string, hashedPassword: string):
 };
 
 // JWT token generálása
-export const generateToken = (userId: number): string => {
-    return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1h' });
+export const generateToken = (user: any): string => {
+    return jwt.sign({ name: user.name, email: user.email, id: user.id }, JWT_SECRET, { expiresIn: '1h' });
 };
 
 // JWT token ellenőrzése

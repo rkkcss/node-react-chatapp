@@ -22,6 +22,7 @@ const authDef = `#graphql
     type Query {
         getUserByEmail(email: String!): User
         getUserById(id: ID!): User
+        me: User
     }
 `;
 

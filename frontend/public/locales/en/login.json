@@ -1,0 +1,12 @@
+{
+    "login": "Log in",
+    "register": "Registration",
+    "logout": "Log out",
+    "welcome": "Welcome",
+    "email": "E-mail",
+    "emailPlaceholder": "E-mail...",
+    "password": "Password",
+    "passwordPlaceholder": "Password...",
+    "requiredField": "Required field...",
+    "Invalid credentials": "Invalid credentials!"
+}

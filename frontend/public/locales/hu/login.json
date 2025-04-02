@@ -1,0 +1,12 @@
+{
+    "login": "Bejelentkezés",
+    "register": "Regisztráció",
+    "logout": "Kijelentkezés",
+    "welcome": "Üdvözöllek",
+    "email": "E-mail",
+    "emailPlaceholder": "E-mail...",
+    "password": "Jelszó",
+    "passwordPlaceholder": "Jelszó...",
+    "requiredField": "Kötelező mező...",
+    "Invalid credentials": "Rossz felhasználónév vagy jelszó!"
+}

@@ -1,9 +1,22 @@
+import { Route, Routes } from 'react-router'
 import './App.css'
+import Login from './pages/Login'
+import ProtectedRoute from './pages/ProtectedRoute'
+import ChatLayout from './layouts/ChatLayout'
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
   return (
     <>
-      <h1 className="bg-red-500">asd</h1>
+      <AuthProvider>
+        <Routes>
+          <Route index path="" element={<Login />}></Route>
+          <Route index path="login" element={<Login />}></Route>
+          <Route element={<ProtectedRoute />}>
+            <Route path="/chat" element={<ChatLayout />}></Route>
+          </Route>
+        </Routes>
+      </AuthProvider>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { comparePassword, generateToken, hashPassword } from "../helpers/auth";
 import { prisma } from "../prismaClient";
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 const authResolver = {
     Mutation: {
@@ -11,14 +12,13 @@ const authResolver = {
             if (!user || !(await comparePassword(password, user.password))) {
                 throw new Error('Invalid credentials');
             }
-            const token = generateToken(user.id);
+            const token = generateToken(user);
 
-            // 🔹 HTTPOnly sütiben tároljuk a tokent!
             res.cookie("token", token, {
-                httpOnly: true, // 🔹 Nem érhető el JavaScriptből
-                secure: process.env.NODE_ENV === "production", // 🔹 Csak HTTPS-en, ha éles környezet
-                sameSite: "strict", // 🔹 CSRF támadások ellen
-                maxAge: 1000 * 60 * 60, // 🔹 1 óra
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                maxAge: 1000 * 60 * 60,
             });
 
             return { message: "Login successful" };
@@ -48,6 +48,24 @@ const authResolver = {
             context.res.clearCookie("token", { httpOnly: true, secure: true });
 
             return "Logout successful";
+        },
+    },
+    Query: {
+        me: (_: any, __: any, context: any) => {
+            const token = context.req?.cookies?.token;
+
+            if (!token) {
+                console.warn("Nincs token a cookie-kban.");
+                return null; // ❌ { user: null } helyett simán null kell
+            }
+
+            try {
+                const decoded = jwt.verify(token, "your-secret-key") as { id: number; email: string; name: string };
+                return decoded; // ✅ Nem kell { user: decoded }, mert a schema `User`-t vár vissza
+            } catch (err) {
+                console.error("Érvénytelen token:", err);
+                return null;
+            }
         },
     }
 
