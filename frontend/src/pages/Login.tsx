@@ -27,7 +27,7 @@ const Login = () => {
     const onFinish = async (values: LoginProps) => {
         await login({ variables: { email: values.email, password: values.password } })
         await refetch();
-        navigate("/chat")
+        navigate("/c/chat")
     }
 
     return (

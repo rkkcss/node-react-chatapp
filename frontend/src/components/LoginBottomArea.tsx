@@ -1,7 +1,8 @@
-import { Button, Dropdown, MenuProps, MenuItemType } from 'antd';
+import { Button, Dropdown } from 'antd';
 import { MdKeyboardArrowUp } from 'react-icons/md';
 import logo from "../assets/logo.png";
 import { useTranslation } from 'react-i18next';
+import { MenuItemType } from 'antd/es/menu/interface';
 
 const LoginBottomArea = () => {
     const { i18n, t } = useTranslation("login-bottom-area");
