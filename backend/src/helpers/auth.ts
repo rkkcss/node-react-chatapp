@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -21,7 +22,7 @@ export const generateToken = (user: any): string => {
 // JWT token ellenőrzése
 export const verifyToken = (token: string) => {
     try {
-        return jwt.verify(token, JWT_SECRET);
+        return jwt.verify(token, JWT_SECRET) as User;
     } catch (error) {
         return null;
     }

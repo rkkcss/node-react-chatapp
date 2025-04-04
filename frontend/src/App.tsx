@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import MainLayout from './layouts/MainLayout'
 import ChatLayout from './layouts/ChatLayout'
 import ChatArea from './components/ChatArea'
+import NewChat from './pages/NewChat'
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="c" element={<MainLayout />}>
               <Route path="chat" element={<ChatLayout />}>
-                <Route path=":room" element={<ChatArea />} />
+                <Route path=":roomId" element={<ChatArea />} />
+                <Route path="new" element={<NewChat />} />
               </Route>
             </Route>
           </Route>

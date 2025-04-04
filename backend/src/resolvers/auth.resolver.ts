@@ -1,6 +1,6 @@
 import { comparePassword, generateToken, hashPassword } from "../helpers/auth";
 import { prisma } from "../prismaClient";
-import { Request, Response } from "express";
+import { Response } from "express";
 import jwt from "jsonwebtoken";
 
 const authResolver = {

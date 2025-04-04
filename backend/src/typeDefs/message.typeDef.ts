@@ -16,22 +16,22 @@ const messageTypeDef = `#graphql
 
     type Mutation {
         sendMessage(chatId: ID!, messageText: String!): Message!
-        editMessage(messageId: ID!, newText: String!): Message!
-        replyToMessage(messageId: ID!, replyText: String!): Message!
-        deleteMessage(messageId: ID!): Message!
+        # editMessage(messageId: ID!, newText: String!): Message!
+        # replyToMessage(messageId: ID!, replyText: String!): Message!
+        # deleteMessage(messageId: ID!): Message!
 
-        markMessageAsRead(messageId: ID!): Message!
-        markMessageAsDelivered(messageId: ID!): Message!
-        markMessageAsFailed(messageId: ID!): Message!
-        markMessageAsReplied(messageId: ID!): Message!
-        markMessageAsEdited(messageId: ID!): Message!
-        markMessageAsDeleted(messageId: ID!): Message!
+        # markMessageAsRead(messageId: ID!): Message!
+        # markMessageAsDelivered(messageId: ID!): Message!
+        # markMessageAsFailed(messageId: ID!): Message!
+        # markMessageAsReplied(messageId: ID!): Message!
+        # markMessageAsEdited(messageId: ID!): Message!
+        # markMessageAsDeleted(messageId: ID!): Message!
     }
 
     type Query {
-        getMessages(chatId: ID!): [Message!]!
-        getMessage(messageId: ID!): Message!
-        getUnreadMessagesCount(chatId: ID!): Int!
+        getMessages(chatId: Int!): [Message!]!
+        # getMessage(messageId: ID!): Message!
+        # getUnreadMessagesCount(chatId: ID!): Int!
     }
 `
 

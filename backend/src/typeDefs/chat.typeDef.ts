@@ -1,7 +1,8 @@
 const chatTypeDef = `#graphql 
     type Chat {
         id: ID!
-        participants: [User!]!
+        name: String
+        participants: [Participant!]!
         messages: [Message!]!
         createdAt: String!
         updatedAt: String!
@@ -15,7 +16,7 @@ const chatTypeDef = `#graphql
 
     type Query {
         getChats: [Chat!]!
-        getChat(chatId: ID!): Chat!
+        getChat(chatId: Int!): Chat!
     }
 `
 

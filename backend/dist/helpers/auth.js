@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyToken = exports.generateToken = exports.comparePassword = exports.hashPassword = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const JWT_SECRET = 'your_jwt_secret_key'; // Cseréld ki egy erősebb, biztonságos kulcsra!
+const JWT_SECRET = 'your-secret-key'; // Cseréld ki egy erősebb, biztonságos kulcsra!
 // Jelszó hashelése
 const hashPassword = (password) => __awaiter(void 0, void 0, void 0, function* () {
     return bcryptjs_1.default.hash(password, 10);
@@ -27,8 +27,8 @@ const comparePassword = (password, hashedPassword) => __awaiter(void 0, void 0, 
 });
 exports.comparePassword = comparePassword;
 // JWT token generálása
-const generateToken = (userId) => {
-    return jsonwebtoken_1.default.sign({ userId }, JWT_SECRET, { expiresIn: '1h' });
+const generateToken = (user) => {
+    return jsonwebtoken_1.default.sign({ name: user.name, email: user.email, id: user.id }, JWT_SECRET, { expiresIn: '1h' });
 };
 exports.generateToken = generateToken;
 // JWT token ellenőrzése

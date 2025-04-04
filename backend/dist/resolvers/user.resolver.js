@@ -11,23 +11,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const prismaClient_1 = require("../prismaClient");
 const userResolver = {
-    getUserByEmail: (_a) => __awaiter(void 0, [_a], void 0, function* ({ email }) {
-        console.log(email);
-        return yield prismaClient_1.User.findUnique({
-            where: { email: email },
-        });
-    }),
-    getUserById: (_a) => __awaiter(void 0, [_a], void 0, function* ({ id }) {
-        console.log("User id: " + id);
-        const user = yield prismaClient_1.prisma.user.findUnique({
-            where: { id },
-            include: {
-                blogs: true,
+    Query: {
+        getUserByEmail: (_parent_1, _a) => __awaiter(void 0, [_parent_1, _a], void 0, function* (_parent, { email }) {
+            console.log(email);
+            return yield prismaClient_1.User.findUnique({
+                where: { email: email },
+            });
+        }),
+        getUserById: (_parent, args) => __awaiter(void 0, void 0, void 0, function* () {
+            const id = Number(args.id);
+            console.log("Provided id: " + id);
+            if (typeof id !== "number" || isNaN(id)) {
+                throw new Error("Invalid ID format: ID must be a number");
             }
-        });
-        if (!user)
-            throw new Error("User not found with id: " + id);
-        return user;
-    })
+            const user = yield prismaClient_1.prisma.user.findUnique({
+                where: { id },
+            });
+            if (!user)
+                throw new Error("User not found with id: " + id);
+            return user;
+        })
+    }
 };
 exports.default = userResolver;

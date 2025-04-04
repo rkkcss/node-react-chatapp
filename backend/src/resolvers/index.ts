@@ -5,6 +5,6 @@ import authResolver from "./auth.resolver";
 import messageResolver from "./message.resolver";
 
 
-const mergedResolvers = mergeResolvers([chatResolver, userResolver, authResolver, messageResolver]);
+const mergedResolvers = mergeResolvers([chatResolver, userResolver, messageResolver, authResolver]);
 
 export default mergedResolvers;

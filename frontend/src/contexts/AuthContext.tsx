@@ -1,10 +1,11 @@
 import React, { createContext, useContext } from "react";
-import { gql, useQuery } from "@apollo/client";
+import { ApolloError, gql, useQuery } from "@apollo/client";
+import { User } from "../types/UserType";
 
 interface AuthContextType {
-  user: any;
+  user: User;
   loading: boolean;
-  error: any;
+  error?: string | ApolloError;
   refetch: () => void;
 }
 
@@ -14,7 +15,7 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const ME_QUERY = gql`
+const ME_QUERY = gql`
   query Me {
     me {
       id

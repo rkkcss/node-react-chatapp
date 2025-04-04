@@ -17,29 +17,43 @@ const http_1 = __importDefault(require("http"));
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const express4_1 = require("@apollo/server/express4");
+const express_session_1 = __importDefault(require("express-session"));
 const index_1 = __importDefault(require("./resolvers/index"));
-const server_1 = require("@apollo/server");
 const typeDefs_1 = __importDefault(require("./typeDefs"));
+const server_1 = require("@apollo/server");
 const app = (0, express_1.default)();
+const cookieParser = require('cookie-parser');
 const httpServer = http_1.default.createServer(app);
 const server = new server_1.ApolloServer({
     typeDefs: typeDefs_1.default,
     resolvers: index_1.default,
     plugins: [(0, drainHttpServer_1.ApolloServerPluginDrainHttpServer)({ httpServer })]
 });
+app.use(cookieParser());
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield server.start(); // 🔹 Ezt ténylegesen meg kell hívni
-        app.use("/graphql", (0, cors_1.default)(), express_1.default.json(), (0, express4_1.expressMiddleware)(server, {
-            context: (_a) => __awaiter(this, [_a], void 0, function* ({ req }) {
-                return ({
-                    token: req.headers.authorization || "",
-                });
+        yield server.start();
+        app.use("/graphql", (0, cors_1.default)({
+            origin: "http://localhost:5173",
+            credentials: true
+        }), express_1.default.json(), (0, express4_1.expressMiddleware)(server, {
+            context: (_a) => __awaiter(this, [_a], void 0, function* ({ req, res }) {
+                return { req, res };
             }),
         }));
         httpServer.listen(4000, () => {
             console.log("Server running at http://localhost:4000/graphql");
         });
+        app.use((0, express_session_1.default)({
+            secret: "your-secret-key", // Titkos kulcs a session titkosításához
+            resave: false,
+            saveUninitialized: false,
+            cookie: {
+                httpOnly: true,
+                secure: false,
+                sameSite: "lax",
+            },
+        }));
     });
 }
 startServer();

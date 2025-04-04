@@ -4,17 +4,23 @@ import express from 'express'
 import cors from 'cors'
 import { expressMiddleware } from "@apollo/server/express4";
 import session from "express-session";
+import { Request, Response } from 'express';
 
 import mergedResolvers from './resolvers/index';
-import { ApolloServer } from '@apollo/server';
 import mergedTypeDefs from './typeDefs';
+import { ApolloServer } from '@apollo/server';
 import { buildContext } from 'graphql-passport';
 
 const app = express()
 const cookieParser = require('cookie-parser');
 const httpServer = http.createServer(app)
 
-const server = new ApolloServer<{}>({  // Itt adjuk meg az üres típust
+interface MyContext {
+  req: Request;
+  res: Response;
+}
+
+const server = new ApolloServer<MyContext>({  // Itt adjuk meg az üres típust
   typeDefs: mergedTypeDefs,
   resolvers: mergedResolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
@@ -33,7 +39,9 @@ async function startServer() {
     }),
     express.json(),
     expressMiddleware(server, {
-      context: async ({ req, res }) => buildContext({ req, res }),
+      context: async ({ req, res }): Promise<MyContext> => {
+        return { req, res };
+      }
     })
   );
 
