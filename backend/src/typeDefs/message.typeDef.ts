@@ -1,6 +1,6 @@
 const messageTypeDef = `#graphql 
     type Message {
-        id: ID!
+        id: Int!
         sender: User!
         text: String!
         createdAt: String!
@@ -15,7 +15,7 @@ const messageTypeDef = `#graphql
     }
 
     type Mutation {
-        sendMessage(chatId: ID!, messageText: String!): Message!
+        sendMessage(content: String!, chatId: Int!): Message!
         # editMessage(messageId: ID!, newText: String!): Message!
         # replyToMessage(messageId: ID!, replyText: String!): Message!
         # deleteMessage(messageId: ID!): Message!

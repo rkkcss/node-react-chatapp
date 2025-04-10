@@ -15,12 +15,12 @@ const app = express()
 const cookieParser = require('cookie-parser');
 const httpServer = http.createServer(app)
 
-interface MyContext {
+export interface CustomContext {
   req: Request;
   res: Response;
 }
 
-const server = new ApolloServer<MyContext>({  // Itt adjuk meg az üres típust
+const server = new ApolloServer<CustomContext>({  // Itt adjuk meg az üres típust
   typeDefs: mergedTypeDefs,
   resolvers: mergedResolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
@@ -39,7 +39,7 @@ async function startServer() {
     }),
     express.json(),
     expressMiddleware(server, {
-      context: async ({ req, res }): Promise<MyContext> => {
+      context: async ({ req, res }): Promise<CustomContext> => {
         return { req, res };
       }
     })

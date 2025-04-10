@@ -1,6 +1,12 @@
 import { verify } from "jsonwebtoken";
 import { prisma } from "../prismaClient";
-import { verifyToken } from "../helpers/auth";
+import { getUserFromContext, verifyToken } from "../helpers/auth";
+import { CustomContext } from "..";
+
+type GetChatMessagesType = {
+    chatId: number;
+    page: number;
+}
 
 const chatResolver = {
     Mutation: {
@@ -32,6 +38,52 @@ const chatResolver = {
         // }
     },
     Query: {
+        getChatMessages: async (_: any, { chatId, page }: GetChatMessagesType, context: CustomContext) => {
+            const user = getUserFromContext(context);
+            if (!user) {
+                throw new Error("User not authenticated!")
+            }
+
+            const skip = (page - 1) * 40;
+
+            const totalMessages = await prisma.message.count({
+                where: { chatId },
+            });
+
+            const chat = await prisma.chat.findUnique({
+                where: { id: chatId },
+                select: {
+                    id: true,
+                    name: true,
+                    participants: {
+                        select: {
+                            id: true,
+                            user: {
+                                select: {
+                                    id: true,
+                                    name: true
+                                }
+                            }
+                        }
+                    },
+                    messages: {
+                        orderBy: { createdAt: "desc" },
+                        skip,
+                        take: 40,
+                        include: {
+                            sender: true,
+                        },
+                    },
+                },
+            });
+
+            return {
+                ...chat,
+                totalCount: totalMessages,
+                hasNextPage: skip + 40 < totalMessages,
+                hasPreviousPage: skip > 0,
+            };
+        },
         getChats: async (_: any, args: any, context: any) => {
             if (!context.req.cookies.token) {
                 throw new Error("You must be logged in to access this feature");

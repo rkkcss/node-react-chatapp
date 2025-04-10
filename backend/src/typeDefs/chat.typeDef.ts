@@ -11,10 +11,10 @@ const chatTypeDef = `#graphql
 
     type Mutation {
         createChat(participants: [ID!]!): Chat!
-        sendMessage(chatId: ID!, messageText: String!): Message!
     }
 
     type Query {
+        getChatMessages(chatId: Int!, page: Int!): Chat!
         getChats: [Chat!]!
         getChat(chatId: Int!): Chat!
     }

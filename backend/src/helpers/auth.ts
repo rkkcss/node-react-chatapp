@@ -1,6 +1,7 @@
 import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import { CustomContext } from '..';
 
 const JWT_SECRET = 'your-secret-key'; // Cseréld ki egy erősebb, biztonságos kulcsra!
 
@@ -27,3 +28,12 @@ export const verifyToken = (token: string) => {
         return null;
     }
 };
+
+export const getUserFromContext = (context: CustomContext) => {
+    const token: string = context?.req?.cookies?.token;
+    if (!token) {
+        throw new Error("User is not authenticated!");
+    }
+
+    return verifyToken(token);
+}

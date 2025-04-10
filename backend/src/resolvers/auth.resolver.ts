@@ -1,3 +1,4 @@
+import { CustomContext } from "..";
 import { comparePassword, generateToken, hashPassword } from "../helpers/auth";
 import { prisma } from "../prismaClient";
 import { Response } from "express";
@@ -51,17 +52,17 @@ const authResolver = {
         },
     },
     Query: {
-        me: (_: any, __: any, context: any) => {
+        me: (_: any, __: any, context: CustomContext) => {
             const token = context.req?.cookies?.token;
 
             if (!token) {
                 console.warn("Nincs token a cookie-kban.");
-                return null; // ❌ { user: null } helyett simán null kell
+                return null;
             }
 
             try {
                 const decoded = jwt.verify(token, "your-secret-key") as { id: number; email: string; name: string };
-                return decoded; // ✅ Nem kell { user: decoded }, mert a schema `User`-t vár vissza
+                return decoded;
             } catch (err) {
                 console.error("Érvénytelen token:", err);
                 return null;

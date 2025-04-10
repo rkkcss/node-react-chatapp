@@ -8,7 +8,18 @@ import ChatLayout from './layouts/ChatLayout'
 import ChatArea from './components/ChatArea'
 import NewChat from './pages/NewChat'
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/hu";
+import "dayjs/locale/en";
+import { useTranslation } from 'react-i18next'
+
+dayjs.extend(relativeTime);
+
 function App() {
+  const { i18n } = useTranslation();
+  dayjs.locale(i18n.language)
+
   return (
     <>
       <AuthProvider>

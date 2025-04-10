@@ -1,3 +1,4 @@
+import { gql, useMutation } from '@apollo/client'
 import { Button, Dropdown } from 'antd'
 import { MenuItemType } from 'antd/es/menu/interface'
 import { IoChatbubbleOutline, IoLogInOutline } from 'react-icons/io5'
@@ -5,18 +6,27 @@ import { LuUser } from 'react-icons/lu'
 import { TbSettings } from 'react-icons/tb'
 import { useLocation, useNavigate } from 'react-router'
 
+const LOGOUT = gql`
+    mutation logout {
+        logout
+    }
+`
 const MainMenu = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [logout] = useMutation(LOGOUT, {
+        onCompleted: () => {
+            navigate("/login")
+        }
+    });
 
-    console.log(location.pathname.split('/'))
     const userItems: MenuItemType[] = [
         {
             key: "logout",
             icon: <IoLogInOutline size={20} />,
             label: "Logout",
             disabled: false,
-            onClick: () => { console.log("logged out") },
+            onClick: () => { logout() },
             className: ``
         }
     ]
