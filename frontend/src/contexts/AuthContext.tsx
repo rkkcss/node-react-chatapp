@@ -1,17 +1,17 @@
-import React, { createContext, useContext } from "react";
-import { ApolloError, gql, useQuery } from "@apollo/client";
-import { User } from "../types/UserType";
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from "react";
+import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
+import { UserType } from "../types/UserType";
+import { useNavigate } from "react-router";
 
 interface AuthContextType {
-  user: User;
+  user?: UserType | null;
   loading: boolean;
   error?: string | ApolloError;
   refetch: () => void;
+  logout: () => void;
 }
 
-interface AuthProviderProps {
-  children: React.ReactNode;
-}
+type AuthProviderProps = PropsWithChildren;
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -24,11 +24,49 @@ const ME_QUERY = gql`
   }
 `;
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { data, loading, error, refetch } = useQuery(ME_QUERY, { fetchPolicy: "network-only" });
-  const value = { user: data?.me, loading, error, refetch };
+const LOGOUT = gql`
+    mutation logout {
+        logout
+    }
+`
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const { data, loading, error, refetch } = useQuery(ME_QUERY, { fetchPolicy: "network-only" });
+  const [user, setUser] = useState<UserType | null>(null);
+  const navigate = useNavigate();
+
+  const [logoutMutation] = useMutation(LOGOUT, {
+    onCompleted: () => {
+      navigate("/login")
+    }
+  });
+
+
+  useEffect(() => {
+    async function fetchUser() {
+      if (data?.me) {
+        setUser(data.me);
+      }
+    }
+
+    fetchUser();
+  }, [data, refetch])
+
+  const logout = () => {
+    setUser(null);
+    logoutMutation()
+  }
+
+  return <AuthContext.Provider value={
+    {
+      user,
+      loading,
+      error,
+      refetch,
+      logout
+    }
+  }
+  >{children}</AuthContext.Provider>;
 };
 
 export const useAuth = (): AuthContextType => {

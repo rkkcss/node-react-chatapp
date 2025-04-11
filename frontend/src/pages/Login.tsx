@@ -5,6 +5,7 @@ import { useNavigate } from "react-router"
 import { useAuth } from "../contexts/AuthContext"
 import LoginBottomArea from "../components/LoginBottomArea"
 import { useTranslation } from "react-i18next"
+import { useEffect } from "react"
 
 const LOGIN = gql`
     mutation login($email: String!, $password: String!) {
@@ -22,13 +23,27 @@ type LoginProps = {
 const Login = () => {
     const navigate = useNavigate();
     const { t } = useTranslation("login")
-    const { refetch } = useAuth();
-    const [login, { loading, error }] = useMutation(LOGIN);
+    const { user, refetch } = useAuth();
+    const [login, { loading, error }] = useMutation(LOGIN, {
+        onCompleted: async () => {
+            await refetch();
+            // navigate("/c/chat");
+        }
+    });
     const onFinish = async (values: LoginProps) => {
-        await login({ variables: { email: values.email, password: values.password } })
-        await refetch();
-        navigate("/c/chat")
+        try {
+            await login({ variables: { email: values.email, password: values.password } });
+        } catch (error) {
+            console.error("Login error:", error);
+        }
     }
+
+    useEffect(() => {
+        console.log("USER STATE", user)
+        if (user) {
+            navigate("/c/chat")
+        }
+    }, [user, navigate])
 
     return (
         <div className="flex justify-center items-center min-h-dvh ">

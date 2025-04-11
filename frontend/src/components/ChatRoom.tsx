@@ -1,5 +1,7 @@
 import { Link, useParams } from "react-router"
 import example from "../assets/react.svg"
+import { useEffect } from "react"
+import { useSocket } from "../contexts/SocketContext"
 
 type ChatRoomType = {
     name: string

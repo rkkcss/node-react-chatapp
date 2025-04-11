@@ -8,6 +8,7 @@ import { MessageType } from '../types/MessageType'
 import { useEffect, useRef, useState } from 'react'
 import { BiMessageRoundedX } from 'react-icons/bi'
 import ChatHeader from './ChatHeader'
+import { useSocket } from '../contexts/SocketContext'
 
 const GET_CHAT_MESSAGES = gql`
     query getChatMessages($chatId: Int!, $page: Int!) {
@@ -93,6 +94,30 @@ const ChatArea = () => {
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "auto" });
     }, [data?.getChatMessages?.messages]);
+
+
+    const { socket, isConnected } = useSocket();
+
+    useEffect(() => {
+        joinRoom();
+
+        return () => {
+            handleLeaveRoom()
+        }
+    }, [socket])
+
+    const handleLeaveRoom = () => {
+        if (socket) {
+            socket.emit("leave-room", roomId);
+            console.log(`Elhagytad a ${roomId} szobát!`);
+        }
+    };
+
+    const joinRoom = () => {
+        if (socket) {
+            socket.emit("join-room", roomId); // Küldünk egy join szobát eseményt
+        }
+    };
 
     console.log(data)
     return (

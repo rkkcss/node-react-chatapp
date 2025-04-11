@@ -1,24 +1,15 @@
-import { gql, useMutation } from '@apollo/client'
 import { Button, Dropdown } from 'antd'
 import { MenuItemType } from 'antd/es/menu/interface'
 import { IoChatbubbleOutline, IoLogInOutline } from 'react-icons/io5'
 import { LuUser } from 'react-icons/lu'
 import { TbSettings } from 'react-icons/tb'
 import { useLocation, useNavigate } from 'react-router'
+import { useAuth } from '../contexts/AuthContext'
 
-const LOGOUT = gql`
-    mutation logout {
-        logout
-    }
-`
 const MainMenu = () => {
+    const { logout } = useAuth()
     const navigate = useNavigate();
     const location = useLocation();
-    const [logout] = useMutation(LOGOUT, {
-        onCompleted: () => {
-            navigate("/login")
-        }
-    });
 
     const userItems: MenuItemType[] = [
         {

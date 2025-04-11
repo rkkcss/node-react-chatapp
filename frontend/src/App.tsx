@@ -13,6 +13,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/hu";
 import "dayjs/locale/en";
 import { useTranslation } from 'react-i18next'
+import { SocketProvider } from './contexts/SocketContext'
 
 dayjs.extend(relativeTime);
 
@@ -23,18 +24,20 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <Routes>
-          <Route index path="" element={<Login />}></Route>
-          <Route index path="login" element={<Login />}></Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path="c" element={<MainLayout />}>
-              <Route path="chat" element={<ChatLayout />}>
-                <Route path=":roomId" element={<ChatArea />} />
-                <Route path="new" element={<NewChat />} />
+        <SocketProvider>
+          <Routes>
+            <Route index path="" element={<Login />}></Route>
+            <Route index path="login" element={<Login />}></Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="c" element={<MainLayout />}>
+                <Route path="chat" element={<ChatLayout />}>
+                  <Route path=":roomId" element={<ChatArea />} />
+                  <Route path="new" element={<NewChat />} />
+                </Route>
               </Route>
             </Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </SocketProvider>
       </AuthProvider>
     </>
   )
