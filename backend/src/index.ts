@@ -2,6 +2,8 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import http from 'http'
 import express from 'express'
 import cors from 'cors'
+import dotenv from 'dotenv';
+
 import { expressMiddleware } from "@apollo/server/express4";
 import session from "express-session";
 import { Request, Response } from 'express';
@@ -9,8 +11,9 @@ import { Request, Response } from 'express';
 import mergedResolvers from './resolvers/index';
 import mergedTypeDefs from './typeDefs';
 import { ApolloServer } from '@apollo/server';
-import { buildContext } from 'graphql-passport';
 import { initSocket } from './websocket/socket';
+
+dotenv.config();
 
 const app = express()
 const cookieParser = require('cookie-parser');
@@ -35,7 +38,7 @@ async function startServer() {
   app.use(
     "/graphql",
     cors({
-      origin: "http://localhost:5173",
+      origin: process.env.CLIENT_URL,
       credentials: true
     }),
     express.json(),
@@ -49,7 +52,7 @@ async function startServer() {
   initSocket(httpServer);
 
   httpServer.listen(4000, () => {
-    console.log("Server running at http://localhost:4000/graphql");
+    console.log(`Server running at ${process.env.CLIENT_URL}`);
   });
   app.use(
     session({

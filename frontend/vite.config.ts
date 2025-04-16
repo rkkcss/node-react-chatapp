@@ -11,6 +11,6 @@ export default defineConfig({
   preview: {
     host: true,
     port: 4173,
-    allowedHosts: ['frontend-production-e188.up.railway.app']
+    allowedHosts: ['rkkcss.up.railway.app']
   }
 })
