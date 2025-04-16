@@ -6,6 +6,14 @@ import { TbSettings } from 'react-icons/tb'
 import { useLocation, useNavigate } from 'react-router'
 import { useAuth } from '../contexts/AuthContext'
 
+type SidebarItem = {
+    label: string;
+    key: string;
+    icon: React.ReactNode;
+    onClick: (e: React.MouseEvent<HTMLElement>) => void;
+    className?: string;
+};
+
 const MainMenu = () => {
     const { logout } = useAuth()
     const navigate = useNavigate();
@@ -22,7 +30,7 @@ const MainMenu = () => {
         }
     ]
 
-    const menuItems: MenuItemType[] = [
+    const menuItems: SidebarItem[] = [
         {
             label: "",
             key: "chat",

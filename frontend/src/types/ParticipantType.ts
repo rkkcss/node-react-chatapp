@@ -1,8 +1,9 @@
-import { ChatRoom } from "./ChatRoomType";
-import { User } from "./UserType";
+import { ChatRoomType } from "./ChatRoomType";
+import { UserType } from "./UserType";
+
 
 export type Participants = {
     id: string;
-    user: User;
-    chat: ChatRoom;
+    user: UserType;
+    chat: ChatRoomType;
 }

@@ -1,5 +1,4 @@
 import { Link, useParams } from "react-router"
-import example from "../assets/react.svg"
 import { Avatar } from "antd"
 
 type ChatRoomType = {

@@ -5,7 +5,7 @@ type ChatHeaderProps = {
     chatName: string
 }
 
-const ChatHeader = ({ chatName, participants }: ChatHeaderProps) => {
+const ChatHeader = ({ chatName }: ChatHeaderProps) => {
 
     return (
         <div className="p-2 border-b border-b-alto-200 ">
