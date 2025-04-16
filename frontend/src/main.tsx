@@ -7,8 +7,10 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { ConfigProvider } from 'antd'
 import "./i18n.ts";
 
+const SERVER_URL = import.meta.env.VITE_GRAPHQL_URL;
+
 export const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql", // server URL here
+  uri: SERVER_URL, // server URL here
   cache: new InMemoryCache(),
   credentials: "include",
 });

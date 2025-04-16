@@ -8,6 +8,8 @@ type SocketContextType = {
     isConnected: boolean;
 };
 
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+
 const SocketContext = createContext<SocketContextType>({
     socket: null,
     isConnected: false,
@@ -22,7 +24,7 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
 
     useEffect(() => {
         if (user && !socketRef.current) {
-            const socket = io("http://localhost:4000", {
+            const socket = io(SOCKET_URL, {
                 withCredentials: true,
             });
 
