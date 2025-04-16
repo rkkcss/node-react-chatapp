@@ -13,7 +13,9 @@ import mergedTypeDefs from './typeDefs';
 import { ApolloServer } from '@apollo/server';
 import { initSocket } from './websocket/socket';
 
-dotenv.config();
+dotenv.config({
+  path: process.env.NODE_ENV === "development" ? ".env.development" : ".env.production"
+});
 
 const app = express()
 const cookieParser = require('cookie-parser');
@@ -53,6 +55,7 @@ async function startServer() {
 
   httpServer.listen(4000, () => {
     console.log(`Server running at ${process.env.CLIENT_URL}`);
+    console.log("Server mode: ", process.env.NODE_ENV);
   });
   app.use(
     session({
