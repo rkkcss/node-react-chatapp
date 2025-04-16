@@ -1,4 +1,3 @@
-import React from 'react'
 import { Participants } from '../types/ParticipantType'
 
 type ChatHeaderProps = {
@@ -7,6 +6,7 @@ type ChatHeaderProps = {
 }
 
 const ChatHeader = ({ chatName, participants }: ChatHeaderProps) => {
+
     return (
         <div className="p-2 border-b border-b-alto-200 ">
             <div className="p-2 rounded-lg hover:bg-alto-100 cursor-pointer w-fit">

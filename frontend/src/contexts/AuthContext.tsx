@@ -31,42 +31,42 @@ const LOGOUT = gql`
 `
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const { data, loading, error, refetch } = useQuery(ME_QUERY, { fetchPolicy: "network-only" });
   const [user, setUser] = useState<UserType | null>(null);
   const navigate = useNavigate();
 
   const [logoutMutation] = useMutation(LOGOUT, {
     onCompleted: () => {
-      navigate("/login")
-    }
+      navigate("/login", { replace: true });
+    },
   });
 
-
-  useEffect(() => {
-    async function fetchUser() {
+  const { data, loading, error, refetch } = useQuery(ME_QUERY, {
+    fetchPolicy: "network-only",
+    onCompleted: (data) => {
+      // Ha sikerült a lekérés, akkor beállítjuk a felhasználót.
       if (data?.me) {
         setUser(data.me);
       }
     }
+  });
 
-    fetchUser();
-  }, [data, refetch])
+  useEffect(() => {
+    // Ez biztosítja, hogy a user állapot mindig frissüljön.
+    if (data?.me) {
+      setUser(data.me);
+    }
+  }, [data]);
 
   const logout = () => {
     setUser(null);
-    logoutMutation()
-  }
+    logoutMutation();
+  };
 
-  return <AuthContext.Provider value={
-    {
-      user,
-      loading,
-      error,
-      refetch,
-      logout
-    }
-  }
-  >{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, loading, error, refetch, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = (): AuthContextType => {

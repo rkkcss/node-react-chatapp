@@ -22,29 +22,31 @@ type LoginProps = {
 
 const Login = () => {
     const navigate = useNavigate();
-    const { t } = useTranslation("login")
+    const { t } = useTranslation("login");
     const { user, refetch } = useAuth();
     const [login, { loading, error }] = useMutation(LOGIN, {
         onCompleted: async () => {
+            // Refetch-eljük a me adatokat, miután bejelentkezett a felhasználó.
             await refetch();
-            // navigate("/c/chat");
-        }
+            // Navigálunk a chat oldalra, miután a user adatokat megkaptuk.
+            navigate("/c/chat");
+        },
     });
+
     const onFinish = async (values: LoginProps) => {
         try {
             await login({ variables: { email: values.email, password: values.password } });
         } catch (error) {
             console.error("Login error:", error);
         }
-    }
+    };
 
     useEffect(() => {
-        console.log("USER STATE", user)
+        console.log("USER STATE", user);
         if (user) {
-            navigate("/c/chat")
+            navigate("/c/chat");
         }
-    }, [user, navigate])
-
+    }, [user, navigate]);
     return (
         <div className="flex justify-center items-center min-h-dvh ">
             <div className="min-w-[300px] w-[500px] p-8 rounded-lg border border-alto-200 shadow-sm backdrop-blur-lg bg-white/30">

@@ -1,9 +1,10 @@
 const messageTypeDef = `#graphql 
+    scalar DateTime
     type Message {
         id: Int!
         sender: User!
         text: String!
-        createdAt: String!
+        createdAt: DateTime!
         updatedAt: String!
         chat: Chat!
         isRead: Boolean!

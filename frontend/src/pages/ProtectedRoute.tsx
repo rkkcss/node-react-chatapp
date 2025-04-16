@@ -4,13 +4,9 @@ import { Spin } from "antd";
 
 const ProtectedRoute = () => {
     const { user, loading } = useAuth();
-    console.log("PROCTECTEDROUTE", user)
 
-    // if (user === undefined) {
-    //     return <div>Loading...</div>;
-    // }
+    if (loading || user === undefined) return <Spin fullscreen />;
 
-    if (loading) return <Spin fullscreen />;
     return user === null ? <Navigate to={"/login"} /> : <Outlet />;
 };
 

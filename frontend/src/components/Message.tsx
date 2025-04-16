@@ -5,14 +5,17 @@ import { Tooltip } from "antd"
 
 type MessageProps = {
     message: MessageType,
-    previousMessageTime?: number,
+    previousMessageTime?: Date,
 }
 
 const Message = ({ message, previousMessageTime }: MessageProps) => {
     const { user } = useAuth()
-    const shouldShowTime = !previousMessageTime || Math.abs(Number(message.createdAt) - previousMessageTime) > 5 * 60 * 1000;
 
-    const formatMessageTime = (timestamp: number) => {
+    const shouldShowTime = previousMessageTime
+        ? Math.abs(dayjs(message.createdAt).diff(dayjs(previousMessageTime), 'minute')) > 5
+        : true;
+
+    const formatMessageTime = (timestamp: Date) => {
         const date = dayjs(timestamp)
         const now = dayjs()
 
@@ -25,19 +28,18 @@ const Message = ({ message, previousMessageTime }: MessageProps) => {
         }
     }
 
-
     return (
         <div className="self-end w-full">
             {shouldShowTime && (
-                <p className={`${user.id == message.sender.id ? 'text-right' : "text-left"} text-xs text-alto-800`}>
-                    {formatMessageTime(Number(message.createdAt))}
+                <p className={`text-center text-xs text-alto-800`}>
+                    {formatMessageTime(message.createdAt)}
                 </p>
             )}
 
-            <div className={`${user.id == message.sender.id ? 'justify-end' : 'justify-start'} w-full flex `}>
-                <Tooltip title={formatMessageTime(Number(message.createdAt))} placement="left">
-                    <div className={`${user.id === message.sender.id ? 'bg-blue-400' : "bg-alto-200"} p-2 w-fit max-w-[564px] rounded-xl`}>
-                        <p className="text-sm text-gray-900 ">
+            <div className={`${user?.id == message.sender.id ? 'justify-end' : 'justify-start'} w-full flex `}>
+                <Tooltip title={formatMessageTime(message.createdAt)} placement="left">
+                    <div className={`${user?.id == message.sender.id ? 'bg-blue-600 text-white' : "bg-alto-200"} p-2 w-fit max-w-[564px] rounded-xl`}>
+                        <p className="text-sm">
                             {message.text}
                         </p>
                     </div>

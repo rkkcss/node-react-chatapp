@@ -3,7 +3,6 @@ const authDef = `#graphql
         id: ID!
         name: String!
         email: String!
-        password: String!
         chatRooms: [Participant]
         createdAt: String!
         updatedAt: String!

@@ -1,5 +1,7 @@
 import { Server } from "socket.io";
 import http from "http";
+import { getUserFromContext } from "../helpers/auth";
+import { prisma } from "../prismaClient";
 
 export const initSocket = (server: http.Server) => {
     const io = new Server(server, {
@@ -10,6 +12,8 @@ export const initSocket = (server: http.Server) => {
     });
 
     io.on("connection", (socket) => {
+        const user = getUserFromContext(socket);
+
         console.log("Socket connected:", socket.id);
 
         socket.on("join-room", (roomId) => {
@@ -18,12 +22,27 @@ export const initSocket = (server: http.Server) => {
         });
 
         socket.on("leave-room", (roomId) => {
-            socket.leave(roomId);  // A socket elhagyja a szobát
+            socket.leave(roomId);
             console.log(`Socket ${socket.id} elhagyta a ${roomId} szobát`);
         });
 
-        socket.on("sendMessage", ({ chatId, message }) => {
-            io.to(`chat_${chatId}`).emit("receiveMessage", message);
+        socket.on("sendMessage", async ({ chatId, message }) => {
+            console.log("ÜZI", user)
+            if (!user) {
+                throw new Error("User not authenticated!");
+            }
+            const savedMessage = await prisma.message.create({
+                data: {
+                    text: message,
+                    chatId,
+                    senderId: user.id
+                },
+                include: {
+                    sender: true
+                }
+            });
+
+            io.to(`chat_${chatId}`).emit("receiveMessage", savedMessage);
         });
 
         socket.on("disconnect", () => {

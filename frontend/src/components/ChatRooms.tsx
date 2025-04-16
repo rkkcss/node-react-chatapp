@@ -29,8 +29,12 @@ const ChatRooms = () => {
         <div className="my-4 max-w-[480px] min-w-[300px] rounded-xl border border-alto-200 flex flex-col bg-white">
             <div className="p-3">
                 <div className="flex justify-between items-center mb-3">
-                    <h2 className="text-2xl font-bold text-slate-800">Beszélgetések</h2>
-                    <Button icon={<AiOutlineEdit size={20} />} type="text" shape="circle" onClick={() => navigate("/c/chat/new")}></Button>
+                    <h2 className="text-2xl font-bold text-gray-700">Beszélgetések</h2>
+                    <Button icon={<AiOutlineEdit size={20} />}
+                        type="text"
+                        shape="circle"
+                        onClick={() => navigate("/c/chat/new")}
+                    />
                 </div>
                 <Input placeholder="Keresés a beszélgetések között..." prefix={<TbZoom />} />
             </div>

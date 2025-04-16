@@ -2,8 +2,10 @@ import { Chat, Message } from "@prisma/client";
 import { prisma } from "../prismaClient";
 import { getUserFromContext } from "../helpers/auth";
 import { CustomContext } from "..";
+import { GraphQLDateTime } from "graphql-scalars";
 
 const messageResolver = {
+    DateTime: GraphQLDateTime,
     Query: {
         getMessages: async (_parent: any, { chatId }: { chatId: number }) => {
             return await prisma.message.findMany({
@@ -16,7 +18,6 @@ const messageResolver = {
     Mutation: {
         sendMessage: async (_parent: any, { chatId, content }: { chatId: number, content: string }, context: CustomContext) => {
             const user = getUserFromContext(context);
-            console.log(content)
             if (!user) {
                 throw new Error("User not found!");
             }
