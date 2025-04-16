@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --build",
+    "build": "npx prisma generate && tsc",
     "start": "node ./dist/index.js",
     "dev": "npm run docker:start && nodemon --exec ts-node src/index.ts",
     "docker:start": "docker-compose up -d",
