@@ -26,7 +26,7 @@ export interface CustomContext {
   res: Response;
 }
 
-const server = new ApolloServer<CustomContext>({  // Itt adjuk meg az üres típust
+const server = new ApolloServer<CustomContext>({
   typeDefs: mergedTypeDefs,
   resolvers: mergedResolvers,
   plugins: [ApolloServerPluginDrainHttpServer({ httpServer })]
