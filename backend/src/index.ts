@@ -56,6 +56,7 @@ async function startServer() {
   httpServer.listen(4000, () => {
     console.log(`Server running at ${process.env.CLIENT_URL}`);
     console.log("Server mode: ", process.env.NODE_ENV);
+    console.log("DATABASE_URL: ", process.env.DATABASE_URL);
   });
   app.use(
     session({
