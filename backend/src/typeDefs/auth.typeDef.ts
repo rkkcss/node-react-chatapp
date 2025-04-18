@@ -14,7 +14,7 @@ const authDef = `#graphql
 
     type Mutation {
         login(email: String!, password: String!): AuthResponse!
-        register(name: String!, email: String!, password: String!): String!
+        register(name: String!, email: String!, password: String!): AuthResponse!
         logout: String!
     }
 

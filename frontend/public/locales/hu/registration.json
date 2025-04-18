@@ -1,0 +1,16 @@
+{
+    "register": "Regisztráció",
+    "createAccount": "Fiók létrehozása",
+    "email": "E-mail",
+    "required": "Kötelező mező!",
+    "confirmPassword": "Jelszó megerősítés",
+    "name": "Teljes név",
+    "password": "Jelszó",
+    "atLeast8Char": "A jelszónak legalább 8 karakter hosszúnak kell lennie!",
+    "mustContainNumber": "A jelszónak tartalmaznia kell egy számot!",
+    "mustContainUpperCase": "A jelszónak nagybetűt is kell tartalmaznia!",
+    "passwordUnMatch": "A jelszavak nem egyeznek!",
+    "haveAccount": "Van már fiókod? Lépj be itt.",
+    "registeredSuccessfully": "Sikeres regisztráció!",
+    "motto": "Egy hely, ahol minden üzenet otthonra lel."
+}

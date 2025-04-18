@@ -1,6 +1,7 @@
 {
     "login": "Bejelentkezés",
     "register": "Regisztráció",
+    "dontHaveProfile": "Nincs fiókod? Regisztrálj itt.",
     "logout": "Kijelentkezés",
     "welcome": "Üdvözöllek",
     "email": "E-mail",

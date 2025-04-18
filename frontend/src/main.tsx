@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { ConfigProvider } from 'antd'
 import "./i18n.ts";
+import '@ant-design/v5-patch-for-react-19';
 
 const SERVER_URL = import.meta.env.VITE_GRAPHQL_URL;
 

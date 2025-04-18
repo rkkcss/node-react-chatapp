@@ -33,7 +33,14 @@ const authResolver = {
                 throw new Error('Missing required fields: name, email, or password');
             }
 
-            const existingUser = await prisma.user.findUnique({ where: { email } });
+            const existingUser = await prisma.user.findFirst({
+                where: {
+                    email: {
+                        equals: email,
+                        mode: 'insensitive'
+                    }
+                }
+            });
             if (existingUser) {
                 throw new Error('Email already in use');
             }
@@ -42,13 +49,13 @@ const authResolver = {
             const user = await prisma.user.create({ data: { name, email, password: hashedPassword } });
 
             console.log("User created:", user);
-            return `User created with email: ${user.email}`;
+            return { message: `User created with email: ${user.email}` };
         },
 
         logout: async (_parent: any, _args: any, context: any) => {
             context.res.clearCookie("token", { httpOnly: true, secure: true });
 
-            return "Logout successful";
+            return { message: "Logout successful" };
         },
     },
     Query: {

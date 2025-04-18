@@ -2,6 +2,7 @@
     "login": "Log in",
     "register": "Registration",
     "logout": "Log out",
+    "dontHaveProfile": "Don't have account? Register here.",
     "welcome": "Welcome",
     "email": "E-mail",
     "emailPlaceholder": "E-mail...",

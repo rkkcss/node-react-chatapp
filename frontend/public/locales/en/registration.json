@@ -1,0 +1,16 @@
+{
+    "register": "Registration",
+    "createAccount": "Create account",
+    "email": "E-mail",
+    "name": "Full name",
+    "confirmPassword": "Confirm password",
+    "required": "Required field!",
+    "password": "Password",
+    "atLeast8Char": "Password must be at least 8 characters long!",
+    "mustContainNumber": "The password must contain a number!",
+    "mustContainUpperCase": "The password must contain an uppercase letter!",
+    "passwordUnMatch": "The new password that you entered does not match!",
+    "haveAccount": "Already have account? Log in here.",
+    "registeredSuccessfully": "Successful registration!",
+    "motto": "A place where every message finds its home."
+}

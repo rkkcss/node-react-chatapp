@@ -14,6 +14,7 @@ import "dayjs/locale/hu";
 import "dayjs/locale/en";
 import { useTranslation } from 'react-i18next'
 import { SocketProvider } from './contexts/SocketContext'
+import Registration from './pages/Registration'
 
 dayjs.extend(relativeTime);
 
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route index path="" element={<Login />}></Route>
             <Route index path="login" element={<Login />}></Route>
+            <Route index path="registration" element={<Registration />}></Route>
             <Route element={<ProtectedRoute />}>
               <Route path="c" element={<MainLayout />}>
                 <Route path="chat" element={<ChatLayout />}>
