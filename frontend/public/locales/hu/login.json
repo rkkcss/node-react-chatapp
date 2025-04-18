@@ -8,5 +8,6 @@
     "password": "Jelszó",
     "passwordPlaceholder": "Jelszó...",
     "requiredField": "Kötelező mező...",
-    "Invalid credentials": "Rossz felhasználónév vagy jelszó!"
+    "Invalid credentials": "Rossz felhasználónév vagy jelszó!",
+    "motto": "Egy hely, ahol minden üzenet otthonra lel."
 }

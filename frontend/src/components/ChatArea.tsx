@@ -66,14 +66,12 @@ const ChatArea = () => {
         if (socket) {
             socket.emit("leave-room", `chat_${roomId}`);
             socket.off("receiveMessage", handleReceiveMessage);
-            console.log(`Elhagytad a ${roomId} szobát!`);
         }
     };
 
     const joinRoom = () => {
         if (socket) {
             socket.emit("join-room", `chat_${roomId}`);
-            console.log("Csatlakoztál a szobához: ", roomId)
         }
     };
 

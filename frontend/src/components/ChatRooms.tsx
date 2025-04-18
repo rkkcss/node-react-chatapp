@@ -4,7 +4,7 @@ import ChatRoom from './ChatRoom'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { gql, useQuery } from '@apollo/client'
 import { ChatRoomType } from '../types/ChatRoomType'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 const GET_CHATS = gql`
     query getChats {
@@ -24,9 +24,10 @@ const GET_CHATS = gql`
 const ChatRooms = () => {
     const navigate = useNavigate()
     const { data } = useQuery(GET_CHATS);
+    const { roomId } = useParams();
 
     return (
-        <div className="my-4 max-w-[480px] min-w-[300px] rounded-xl border border-alto-200 flex flex-col bg-white">
+        <div className={`my-4 max-w-[480px] ${roomId ? "hidden md:flex w-[300px]" : "flex w-full"} rounded-xl border border-alto-200 flex-col bg-white`}>
             <div className="p-3">
                 <div className="flex justify-between items-center mb-3">
                     <h2 className="text-2xl font-bold text-gray-700">Beszélgetések</h2>

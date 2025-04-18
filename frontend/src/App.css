@@ -7,3 +7,29 @@
 body {
     background-color: #F8F9FA;
 }
+
+/* ANIMATIONS ON LOGIN PAGE */
+
+@keyframes rise {
+    from {
+        transform: translateY(-80px);
+        /* Kezdés a képernyő tetején */
+    }
+
+    to {
+        transform: translateY(100vh);
+        /* Mozgás a képernyő aljáig */
+    }
+}
+
+.animate-rise {
+    animation: rise 10s linear infinite;
+}
+
+.animate-rise-2 {
+    animation: rise 7s linear infinite;
+}
+
+.animate-rise-3 {
+    animation: rise 4s linear infinite;
+}

@@ -8,5 +8,6 @@
     "password": "Password",
     "passwordPlaceholder": "Password...",
     "requiredField": "Required field...",
-    "Invalid credentials": "Invalid credentials!"
+    "Invalid credentials": "Invalid credentials!",
+    "motto": "A place where every message finds its home."
 }

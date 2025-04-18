@@ -11,7 +11,6 @@ const ChatRoom = ({ name, id }: ChatRoomType) => {
 
     return (
         <Link to={`/c/chat/${id}`} className={`flex hover:bg-slate-200 rounded-lg p-2 cursor-pointer ${roomId === id && "bg-gray-100"}`}>
-            {/* <img className="rounded-full" src={example}></img> */}
             <Avatar src={`https://api.dicebear.com/9.x/initials/svg?seed=${name}`} size="large" />
             <div className="ml-4">
                 <p className="text-sm text-gray-900 font-semibold">{name}</p>
