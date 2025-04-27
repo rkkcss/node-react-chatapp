@@ -1,15 +1,15 @@
 // contexts/SocketContext.tsx
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useAuth } from "./AuthContext"; // már meglévő context
-import { Client, over } from "webstomp-client"
-import SockJS from "sockjs-client";
+import { Client } from "webstomp-client"
+// import SockJS from "sockjs-client";
 
 type SocketContextType = {
     socket: Client | null;
     isConnected: boolean;
 };
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
+// const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
 const SocketContext = createContext<SocketContextType>({
     socket: null,
@@ -21,7 +21,7 @@ export const useSocket = () => useContext(SocketContext);
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     const { user } = useAuth();
     const socketRef = useRef<Client | null>(null);
-    const [isConnected, setIsConnected] = useState(false);
+    const [isConnected] = useState(false);
 
     useEffect(() => {
         // if (user && !socketRef.current) {

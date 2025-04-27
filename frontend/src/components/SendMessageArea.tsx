@@ -20,7 +20,7 @@ const SendMessageArea = ({ roomId }: SendMessageAreaProps) => {
 
         if (socket) {
             console.log("roomdi", roomId)
-            socket.emit("sendMessage", { chatId: roomId, message });
+            // socket.emit("sendMessage", { chatId: roomId, message });
         }
         setMessage("");
     }

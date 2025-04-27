@@ -5,7 +5,7 @@ import ChatHeader from './ChatHeader'
 import { useSocket } from '../contexts/SocketContext'
 import MessagesArea from './MessagesArea'
 import SendMessageArea from './SendMessageArea'
-import { MessageType } from '../types/MessageType'
+// import { MessageType } from '../types/MessageType'
 
 const ChatArea = () => {
     const { roomId } = useParams();
@@ -16,9 +16,9 @@ const ChatArea = () => {
     //     variables: { chatId: Number(roomId), page: 1 },
     // });
 
-    const handleReceiveMessage = (newMessage: MessageType) => {
+    // const handleReceiveMessage = (newMessage: MessageType) => {
 
-    };
+    // };
 
     useEffect(() => {
         joinRoom();

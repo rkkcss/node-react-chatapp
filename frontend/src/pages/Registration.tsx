@@ -35,7 +35,7 @@ const Registration = () => {
                     <h1 className="text-3xl font-bold text-alto-950 mb-6">{t("register")}</h1>
                     {
                         error &&
-                        <Alert className="!my-4" message={t(error.message)} type="error" showIcon />
+                        <Alert className="!my-4" message={t(error)} type="error" showIcon />
                     }
 
                     <Form layout="vertical" onFinish={(data) => handleRegistration(data)}>

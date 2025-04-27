@@ -11,7 +11,7 @@ const LoginForm = () => {
 
     const onFinish = async (values: LoginFormType) => {
         console.log(values)
-        loginQuery(values).then(res => {
+        loginQuery(values).then(() => {
             navigate("/c/chat")
         }).catch(err => {
             setError(err)
