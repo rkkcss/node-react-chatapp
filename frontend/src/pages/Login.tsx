@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import { useEffect } from "react"
 import LoginForm from "../components/LoginForm";
 import TypedBackground from "../components/TypedBackground";
+import { meQuery } from "../queries/AccountQueries";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -13,9 +14,10 @@ const Login = () => {
     const { user } = useAuth();
 
     useEffect(() => {
-        if (user) {
-            navigate("/c/chat");
-        }
+        // if (user) {
+        //     navigate("/c/chat");
+        // }
+        meQuery()
     }, [user, navigate]);
 
     return (

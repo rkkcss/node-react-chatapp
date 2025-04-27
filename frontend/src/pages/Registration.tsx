@@ -4,26 +4,25 @@ import { useTranslation } from 'react-i18next';
 import TypedBackground from '../components/TypedBackground';
 import { NavLink, useNavigate } from 'react-router';
 import LoginBottomArea from '../components/LoginBottomArea';
-import { gql, useMutation } from '@apollo/client';
-
-const REGISTRATION = gql`
-    mutation register($name: String!, $email: String! $password: String!) {
-        register(name: $name email: $email, password: $password) {
-            message
-        }
-    }
-`
+import { RegistrationFormType, registrationQuery } from '../queries/AuthQueries';
+import { useState } from 'react';
 
 const Registration = () => {
     const { t } = useTranslation("registration");
     const navigate = useNavigate();
+    const [error, setError] = useState("");
 
-    const [register, { error }] = useMutation(REGISTRATION, {
-        onCompleted: async () => {
-            notification.success({ message: t("registeredSuccessfully") });
-            navigate("/login");
-        },
-    });
+    const handleRegistration = (data: RegistrationFormType) => {
+        registrationQuery(data)
+            .then(() => {
+                notification.success({ message: t("registeredSuccessfully") });
+                navigate("/login");
+            })
+            .catch(err => {
+                setError(err)
+            });
+    }
+
 
     return (
         <TypedBackground>
@@ -39,7 +38,7 @@ const Registration = () => {
                         <Alert className="!my-4" message={t(error.message)} type="error" showIcon />
                     }
 
-                    <Form layout="vertical" onFinish={(data) => register({ variables: data })}>
+                    <Form layout="vertical" onFinish={(data) => handleRegistration(data)}>
                         <Form.Item
                             name="email"
                             label={t("email")}

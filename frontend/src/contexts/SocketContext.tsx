@@ -1,10 +1,11 @@
 // contexts/SocketContext.tsx
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { io, Socket } from "socket.io-client";
 import { useAuth } from "./AuthContext"; // már meglévő context
+import { Client, over } from "webstomp-client"
+import SockJS from "sockjs-client";
 
 type SocketContextType = {
-    socket: Socket | null;
+    socket: Client | null;
     isConnected: boolean;
 };
 
@@ -19,36 +20,29 @@ export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     const { user } = useAuth();
-    const socketRef = useRef<Socket | null>(null);
+    const socketRef = useRef<Client | null>(null);
     const [isConnected, setIsConnected] = useState(false);
 
     useEffect(() => {
-        if (user && !socketRef.current) {
-            const socket = io(SOCKET_URL, {
-                withCredentials: true,
-            });
+        // if (user && !socketRef.current) {
+        //     const socket = new SockJS(`${SOCKET_URL}ws/connect`);
+        //     const stompClient = over(socket);
 
-            socket.on("connect", () => {
-                console.log("✅ Socket connected");
-                setIsConnected(true);
-            });
+        //     stompClient.connect({ "accept-version": "1.1,1.2" }, frame => {
+        //         socketRef.current = stompClient;
+        //         console.log("Websocket connected", frame);
+        //         setIsConnected(true);
+        //     })
+        // }
 
-            socket.on("disconnect", () => {
-                console.log("❌ Socket disconnected");
-                setIsConnected(false);
-            });
+        // if (!user && socketRef.current) {
+        //     socketRef.current.disconnect();
+        //     socketRef.current = null;
+        // }
 
-            socketRef.current = socket;
-        }
-
-        if (!user && socketRef.current) {
-            socketRef.current.disconnect();
-            socketRef.current = null;
-        }
-
-        return () => {
-            socketRef.current?.disconnect();
-        };
+        // return () => {
+        //     socketRef.current?.disconnect();
+        // };
     }, [user]);
 
     return (

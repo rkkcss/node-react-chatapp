@@ -1,53 +1,33 @@
-import { gql, useMutation } from '@apollo/client'
 import { Alert, Button, Form, Input } from 'antd'
 import { NavLink, useNavigate } from 'react-router'
-import { useAuth } from '../contexts/AuthContext'
 import { useTranslation } from 'react-i18next'
-
-type LoginProps = {
-    email: string
-    password: string
-}
-
-
-const LOGIN = gql`
-    mutation login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-            message
-        }
-    }
-`
+import { LoginFormType, loginQuery } from '../queries/AuthQueries'
+import { useState } from 'react'
 
 const LoginForm = () => {
     const navigate = useNavigate();
-    const { refetch } = useAuth();
     const { t } = useTranslation("login");
+    const [error, setError] = useState<string>("");
 
-    const [login, { loading, error }] = useMutation(LOGIN, {
-        onCompleted: async () => {
-            await refetch();
-            navigate("/c/chat");
-        },
-    });
-
-    const onFinish = async (values: LoginProps) => {
-        try {
-            await login({ variables: { email: values.email, password: values.password } });
-        } catch (error) {
-            console.error("Login error:", error);
-        }
+    const onFinish = async (values: LoginFormType) => {
+        console.log(values)
+        loginQuery(values).then(res => {
+            navigate("/c/chat")
+        }).catch(err => {
+            setError(err)
+        })
     };
 
     return (
         <>
             {
                 error &&
-                <Alert className="!my-4" showIcon type="error" message={t(error.message)}></Alert>
+                <Alert className="!my-4" showIcon type="error" message={t(error)}></Alert>
             }
             <div className="flex">
                 <div className="flex flex-col justify-center w-full flex-1">
                     <Form layout="vertical" onFinish={onFinish} className="">
-                        <Form.Item label={t("email")} name="email"
+                        <Form.Item label={t("email")} name="username"
                             rules={[{ required: true, message: t("requiredField") }]}
                         >
                             <Input placeholder={t("emailPlaceholder")} />
@@ -58,7 +38,7 @@ const LoginForm = () => {
                             <Input type="password" placeholder={t("passwordPlaceholder")} />
                         </Form.Item>
 
-                        <Button type="primary" htmlType="submit" className="mb-5 w-full" loading={loading}>{t("login")}</Button>
+                        <Button type="primary" htmlType="submit" className="mb-5 w-full">{t("login")}</Button>
                         <div className="text-center">
                             <NavLink to={"/registration"}>{t("dontHaveProfile")}</NavLink>
                         </div>
