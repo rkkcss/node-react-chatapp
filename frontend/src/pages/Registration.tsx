@@ -52,8 +52,9 @@ const Registration = () => {
                             <Input placeholder={t("email")} />
                         </Form.Item>
 
-                        <Form.Item label={t("name")}
-                            name="name"
+                        <Form.Item
+                            name="login"
+                            label={t("login")}
                             rules={[
                                 {
                                     required: true,
@@ -61,8 +62,34 @@ const Registration = () => {
                                 }
                             ]}
                         >
-                            <Input placeholder={t("email")} />
+                            <Input placeholder={t("login")} />
                         </Form.Item>
+
+                        <Form.Item
+                            name="firstName"
+                            label={t("firstName")}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: t("required")
+                                }
+                            ]}
+                        >
+                            <Input placeholder={t("firstName")} />
+                        </Form.Item>
+                        <Form.Item
+                            name="lastName"
+                            label={t("lastName")}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: t("required")
+                                }
+                            ]}
+                        >
+                            <Input placeholder={t("lastName")} />
+                        </Form.Item>
+
 
                         <Form.Item label={t("password")}
                             name="password"

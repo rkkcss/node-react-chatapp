@@ -11,10 +11,13 @@ API.interceptors.request.use(
         config.withCredentials = true;
         config.headers["Accept"] = "application/json";
         config.headers["Content-Type"] = "application/json";
-        const csrfToken = getCookie("XSRF-TOKEN");
-        if (csrfToken) {
-            config.headers["X-XSRF-TOKEN"] = csrfToken;
+        const token = localStorage.getItem('jhi-authenticationToken') || sessionStorage.getItem('jhi-authenticationToken');
+
+        if (token) {
+            config.headers = config.headers || {};  // Inicializáljuk, ha nem léteznek.
+            config.headers.Authorization = `Bearer ${token}`;
         }
+
         return config;
     },
     (error) => {
@@ -22,17 +25,6 @@ API.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
-function getCookie(name: string) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        const cookieValue = parts.pop();
-        if (cookieValue) {
-            return cookieValue.split(";").shift();
-        }
-    }
-}
 
 API.interceptors.response.use(
     (response) => {

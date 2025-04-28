@@ -1,5 +1,5 @@
+import axios from "axios";
 import { API } from "../utils/API";
-import { APILogin } from "../utils/APILogin";
 
 export type LoginFormType = {
     login: string,
@@ -14,7 +14,8 @@ export type RegistrationFormType = {
 }
 
 export const loginQuery = (loginData: LoginFormType) => {
-    return APILogin.post("/api/authentication", loginData);
+    console.log(axios.defaults.baseURL)
+    return API.post("/api/authenticate", loginData);
 }
 
 export const logoutQuery = () => {
