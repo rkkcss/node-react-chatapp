@@ -1,64 +1,72 @@
-
-import { useParams } from 'react-router'
-import { useEffect } from 'react'
-import ChatHeader from './ChatHeader'
-import { useSocket } from '../contexts/SocketContext'
-import MessagesArea from './MessagesArea'
-import SendMessageArea from './SendMessageArea'
-// import { MessageType } from '../types/MessageType'
+import { useParams } from 'react-router';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import ChatHeader from './ChatHeader/ChatHeader';
+import { useSocket } from '../contexts/SocketContext';
+import MessagesArea from './MessagesArea';
+import SendMessageArea from './SendMessageArea';
+import { MessageType } from '../types/MessageType';
+import { getMessagesByRoomId } from '../queries/MessageQueries';
+import { useChat } from '../contexts/ChatContext';
+import AdvancedChatInfo from './AdvancedChatInfo';
 
 const ChatArea = () => {
     const { roomId } = useParams();
+    const { isConnected, subscribeRoom, unsubscribe } = useSocket();
+    const [messages, setMessages] = useState<MessageType[]>([]);
+    const currentRoom = useRef<string | null>(null);
+    const { setLastMessage } = useChat();
+    const [toggleAdvancedChatInfo, setToggleAdvancedChatInfo] = useState(false);
 
-    const { socket } = useSocket();
-
-    // const { data } = useQuery(GET_CHAT_MESSAGES, {
-    //     variables: { chatId: Number(roomId), page: 1 },
-    // });
-
-    // const handleReceiveMessage = (newMessage: MessageType) => {
-
-    // };
+    const getAllMessages = useCallback(() => {
+        getMessagesByRoomId(Number(roomId), 0).then((res) => {
+            setMessages(res.data);
+        });
+    }, [roomId])
 
     useEffect(() => {
-        joinRoom();
+        if (isConnected && roomId) {
+            if (currentRoom.current && currentRoom.current !== roomId) {
+                console.log("💥 Unsub from", currentRoom.current);
+                unsubscribe();
+            }
 
-        if (!socket) return;
-
-        // socket.on("receiveMessage", handleReceiveMessage);
+            console.log("📡 Sub to", roomId);
+            subscribeRoom(Number(roomId), handleReceivedMessage);
+            getAllMessages();
+            currentRoom.current = roomId;
+        }
 
         return () => {
-            handleLeaveRoom();
-        }
-    }, [socket, roomId])
+            console.log("🟡 Component unmount");
+            unsubscribe();
+        };
+    }, [roomId, isConnected, subscribeRoom, unsubscribe, getAllMessages]);
 
-    const handleLeaveRoom = () => {
-        if (socket) {
-            // socket.emit("leave-room", `chat_${roomId}`);
-            // socket.off("receiveMessage", handleReceiveMessage);
-        }
-    };
-
-    const joinRoom = () => {
-        if (socket) {
-            // socket.emit("join-room", `chat_${roomId}`);
-        }
+    const handleReceivedMessage = (message: MessageType) => {
+        setMessages((prev) => [message, ...prev]);
+        setLastMessage(Number(roomId), message)
     };
 
     return (
-        <div className="my-4 rounded-xl border border-alto-200 flex flex-col flex-1 ml-3 mr-4 bg-white">
-            <ChatHeader chatName={"chatName"} participants={[]} />
-            <div className="overflow-y-scroll flex-1">
-                <div className="pl-3 pr-1 gap-2 flex flex-col justify-end">
-                    <MessagesArea messages={[]} />
+        <>
+            <div className={`${toggleAdvancedChatInfo && "hidden md:flex"} 
+                my-4 rounded-xl shadow-md flex flex-col flex-1 bg-white`}>
+                <ChatHeader toggleAdvancedChatInfo={() => setToggleAdvancedChatInfo(!toggleAdvancedChatInfo)} />
+                <div className="overflow-y-scroll flex-1">
+                    <div className="pl-3 pr-1 flex flex-col justify-end">
+                        <MessagesArea messages={messages} />
+                    </div>
+                </div>
+                <div className="flex gap-2 p-3">
+                    <SendMessageArea roomId={Number(roomId)} />
                 </div>
             </div>
-            <div className="flex gap-3 p-3">
-                <SendMessageArea roomId={Number(roomId)} />
-            </div>
+            {
+                toggleAdvancedChatInfo &&
+                <AdvancedChatInfo onClose={() => setToggleAdvancedChatInfo(false)} />
+            }
+        </>
+    );
+};
 
-        </div>
-    )
-}
-
-export default ChatArea
+export default ChatArea;

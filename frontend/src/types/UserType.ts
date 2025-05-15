@@ -1,5 +1,9 @@
 export type UserType = {
     id: string;
-    name: string,
-    email: string
+    firstName: string,
+    lastName: string,
+    email: string,
+    imageUrl: string,
+    lastSeen: Date,
+    online: boolean,
 }

@@ -8,6 +8,11 @@ body {
     background-color: #F8F9FA;
 }
 
+body:has(.login, .registration) {
+    overflow: hidden;
+}
+
+
 /* ANIMATIONS ON LOGIN PAGE */
 
 @keyframes rise {

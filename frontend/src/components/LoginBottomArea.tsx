@@ -32,9 +32,9 @@ const LoginBottomArea = () => {
         <div className="fixed bottom-0">
             <ul className="flex items-center border rounded-xl px-3 py-1 bottom-2 border-alto-200 shadow-sm relative bg-white/30 backdrop-blur-md">
                 <li>
-                    <Button type="link">{t("forgottenPassword")}</Button>
+                    <Button href={"/forgotten-password"} type="link">{t("forgottenPassword")}</Button>
                 </li>
-                <li>
+                <li >
                     <Dropdown trigger={["click"]} menu={{ items: languages }}>
                         <Button type="link" onClick={(e) => e.preventDefault()} icon={<MdKeyboardArrowUp />} iconPosition="end">
                             {currentLanguageLabel}

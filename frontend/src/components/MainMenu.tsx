@@ -1,4 +1,4 @@
-import { Button, Dropdown } from 'antd'
+import { Button, Dropdown, message } from 'antd'
 import { MenuItemType } from 'antd/es/menu/interface'
 import { IoChatbubbleOutline, IoLogInOutline } from 'react-icons/io5'
 import { LuUser } from 'react-icons/lu'
@@ -34,16 +34,16 @@ const MainMenu = () => {
         {
             label: "",
             key: "chat",
-            icon: <IoChatbubbleOutline size={25} />,
+            icon: <IoChatbubbleOutline size={25} className="!text-neutral-900" />,
             onClick: () => navigate("/c/chat"),
-            className: location.pathname.includes("/c/chat") ? "bg-gray-300 rounded-lg" : ""
+            className: location.pathname.includes("/c/chat") ? "bg-gray-200 rounded-lg outline outline-1 outline-gray-300" : ""
         },
         {
             label: "",
-            icon: <TbSettings size={25} />,
+            icon: <TbSettings size={25} className="!text-neutral-900" />,
             key: "settings",
-            onClick: () => navigate("/c/settings"),
-            className: location.pathname.includes("/c/settings") ? "bg-alto-200 rounded-lg" : ""
+            onClick: () => message.info("Settings coming soon!"),
+            className: location.pathname.includes("/c/settings") ? "bg-neutral-200 rounded-lg" : "",
         }
     ]
 

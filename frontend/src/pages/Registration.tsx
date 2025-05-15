@@ -23,15 +23,14 @@ const Registration = () => {
             });
     }
 
-
     return (
         <TypedBackground>
-            <div className="h-dvh flex flex-col items-center justify-center">
+            <div className="h-dvh flex flex-col items-center justify-center registration">
                 <div className="text-center flex justify-center flex-col items-center mb-7 relative z-20">
                     <img src={logo} className="h-12 min-w-16" alt="Logo" />
                     <h1 className="text-base font-bold text-slate-800 text-center max-w-sm">{t("motto")}</h1>
                 </div>
-                <div className="w-[90vw] md:w-[500px] p-6 rounded-lg border border-alto-200 shadow-sm backdrop-blur-lg bg-white/30">
+                <div className="w-[90vw] md:w-[500px] p-6 rounded-lg shadow-md backdrop-blur-lg bg-white/40">
                     <h1 className="text-3xl font-bold text-alto-950 mb-6">{t("register")}</h1>
                     {
                         error &&

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AUTH_TOKEN_STORAGE } from "../contexts/AuthContext";
 
 const serverMode = import.meta.env.VITE_API_URL;
 
@@ -33,7 +34,14 @@ API.interceptors.response.use(
     (error) => {
         console.log("err", error);
         if (error.response.status === 401) {
-            // window.location.href = "/logout";
+            if (localStorage.getItem(AUTH_TOKEN_STORAGE)) {
+                localStorage.removeItem(AUTH_TOKEN_STORAGE);
+            }
+            if (sessionStorage.getItem(AUTH_TOKEN_STORAGE)) {
+                sessionStorage.removeItem(AUTH_TOKEN_STORAGE);
+            }
+            // window.location.href = "/login";
+
         }
         return Promise.reject(error);
     }

@@ -1,13 +1,27 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="./src/assets/messagemate.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MessageMate</title>
+  <link rel="stylesheet" type="text/css" href="./src/index.css" />
+</head>
+
+<body>
+  <div id="root">
+    <div class="loading-container">
+      <div class="flex-col justify-center">
+        <img class="logo" src="./src/assets/messagemate.svg" />
+        <p class="text-center text-3xl text-gray-700 font-bold">MessageMate</p>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.tsx"></script>
+  <script>
+    var global = window;
+  </script>
+</body>
+
 </html>

@@ -7,6 +7,7 @@ const ProtectedRoute = () => {
 
     if (loading || user === undefined) return <Spin fullscreen />;
 
+
     return user === null ? <Navigate to={"/login"} /> : <Outlet />;
 };
 

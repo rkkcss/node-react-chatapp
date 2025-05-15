@@ -1,28 +1,16 @@
 import { Alert, Button, Form, Input } from 'antd'
-import { NavLink, useNavigate } from 'react-router'
+import { NavLink } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { LoginFormType, loginQuery } from '../queries/AuthQueries'
-import { useState } from 'react'
-import { AxiosResponse } from 'axios'
+import { LoginFormType } from '../queries/AuthQueries'
+import { useAuth } from '../contexts/AuthContext'
 
 const LoginForm = () => {
-    const navigate = useNavigate();
     const { t } = useTranslation("login");
-    const [error, setError] = useState<string>("");
+
+    const { login, error } = useAuth();
 
     const onFinish = async (values: LoginFormType) => {
-        console.log(values)
-        loginQuery(values).then((result) => {
-            const response = result as AxiosResponse;
-            const bearerToken = response?.headers?.authorization;
-            if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
-                const jwt = bearerToken.slice(7, bearerToken.length);
-                sessionStorage.setItem("jhi-authenticationToken", jwt);
-                navigate("/c/chat")
-            }
-        }).catch(err => {
-            setError(err)
-        })
+        login(values)
     };
 
     return (

@@ -22,7 +22,7 @@ const MessagesArea = ({ messages }: MessagesAreaProps) => {
                     <Message
                         key={message.id}
                         message={message}
-                        previousMessageTime={index > 0 ? arr[index - 1].createdAt : undefined}
+                        previousMessageTime={index > 0 ? arr[index - 1].createdDate : undefined}
                     />
                 )) ||
                 <div className="flex items-center justify-center h-full">

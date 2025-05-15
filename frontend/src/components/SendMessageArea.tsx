@@ -12,7 +12,6 @@ const SendMessageArea = ({ roomId }: SendMessageAreaProps) => {
     const [message, setMessage] = useState<string>("");
     const { socket } = useSocket();
 
-
     const handleSendMessage = (e?: KeyboardEvent) => {
         if (e?.key !== "Enter" || message === "") {
             return
@@ -20,7 +19,7 @@ const SendMessageArea = ({ roomId }: SendMessageAreaProps) => {
 
         if (socket) {
             console.log("roomdi", roomId)
-            // socket.emit("sendMessage", { chatId: roomId, message });
+            socket.send(`/app/chat.sendMessage/${roomId}`, JSON.stringify({ text: message }));
         }
         setMessage("");
     }
@@ -28,11 +27,11 @@ const SendMessageArea = ({ roomId }: SendMessageAreaProps) => {
 
     return (
         <>
-            <Input placeholder="Aa..." value={message}
+            <Input placeholder="Aa..." className="!rounded-4xl" value={message}
                 onKeyDown={(e: KeyboardEvent) => handleSendMessage(e)}
                 onChange={(e) => { setMessage(e.target.value) }}
             />
-            <Button icon={<FiSend />} onClick={() => handleSendMessage()} />
+            <Button icon={<FiSend />} shape="round" type="text" onClick={() => handleSendMessage()} />
         </>
     )
 }

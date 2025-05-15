@@ -38,3 +38,15 @@
     --color-alto-900: #545454;
     --color-alto-950: #363636;
 }
+
+.loading-container {
+    height: 100dvh;
+    width: 100dvw;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.loading-container img {
+    height: 200px
+}

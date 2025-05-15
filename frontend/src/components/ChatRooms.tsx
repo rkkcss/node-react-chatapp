@@ -4,25 +4,24 @@ import ChatRoom from './ChatRoom'
 import { AiOutlineEdit } from 'react-icons/ai'
 import { ChatRoomType } from '../types/ChatRoomType'
 import { useNavigate, useParams } from 'react-router'
-import { useEffect, useState } from 'react'
-import { myChatQuery } from '../queries/ChatRoomQueries'
+import { useChat } from '../contexts/ChatContext'
+import { useEffect } from 'react'
+import { useAuth } from '../contexts/AuthContext'
 
 const ChatRooms = () => {
     const navigate = useNavigate()
     const { roomId } = useParams();
-    const [chats, setChats] = useState<ChatRoomType[]>([])
+    const { chats, queryChats } = useChat();
+    const { user } = useAuth()
 
     useEffect(() => {
-        myChatQuery().then(res => {
-            setChats(res.data)
-        })
+        queryChats()
     }, [])
-
     return (
-        <div className={`my-4 max-w-[480px] ${roomId ? "hidden md:flex w-[300px]" : "flex w-full"} rounded-xl border border-alto-200 flex-col bg-white`}>
+        <div className={`my-4 max-w-[480px] ${roomId ? "hidden md:flex w-[300px]" : "flex w-full"} rounded-xl shadow-md flex-col bg-white`}>
             <div className="p-3">
                 <div className="flex justify-between items-center mb-3">
-                    <h2 className="text-2xl font-bold text-gray-700">Beszélgetések</h2>
+                    <h2 className="text-2xl font-bold text-alto-950">Beszélgetések</h2>
                     <Button icon={<AiOutlineEdit size={20} />}
                         type="text"
                         shape="circle"
@@ -36,7 +35,14 @@ const ChatRooms = () => {
                     chats?.map((chatRoom: ChatRoomType) => (
                         <>
                             <li>
-                                <ChatRoom key={chatRoom.id} name={chatRoom.name} id={chatRoom.id} />
+                                <ChatRoom
+                                    key={chatRoom.id}
+                                    name={chatRoom.name}
+                                    id={chatRoom.id}
+                                    unreadMessageCount={chatRoom.participants.find(p => p.user.id === user?.id)?.unreadMessageCount || 0}
+                                    lastMessageText={chatRoom.lastMessage?.text}
+                                    lastMessageTime={chatRoom.lastMessage?.createdDate}
+                                />
                             </li>
                         </>
                     ))
