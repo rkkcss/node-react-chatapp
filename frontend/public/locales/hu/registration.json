@@ -12,5 +12,8 @@
     "passwordUnMatch": "A jelszavak nem egyeznek!",
     "haveAccount": "Van már fiókod? Lépj be itt.",
     "registeredSuccessfully": "Sikeres regisztráció!",
-    "motto": "Egy hely, ahol minden üzenet otthonra lel."
+    "motto": "Egy hely, ahol minden üzenet otthonra lel.",
+    "firstName": "Vezetéknév",
+    "lastName": "Keresztnév",
+    "username": "Felhasználónév"
 }

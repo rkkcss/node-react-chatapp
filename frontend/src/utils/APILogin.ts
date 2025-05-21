@@ -5,7 +5,6 @@ export const APILogin = axios.create();
 APILogin.interceptors.request.use(
     async (config) => {
         const serverMode = import.meta.env.VITE_API_URL;
-        console.log(serverMode);
         config.baseURL = serverMode;
         config.withCredentials = true;
         config.headers["Content-Type"] = "application/x-www-form-urlencoded";

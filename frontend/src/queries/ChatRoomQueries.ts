@@ -25,7 +25,6 @@ export const searchChatRoomsByUserIdsQuery = (userIds: number[]) => {
 };
 
 export const createChatRoomQuery = (data: CreateChatRoomQueryType) => {
-    console.log(data)
     return API.post("/api/chat-rooms", data);
 }
 

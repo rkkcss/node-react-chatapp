@@ -12,5 +12,8 @@
     "passwordUnMatch": "The new password that you entered does not match!",
     "haveAccount": "Already have account? Log in here.",
     "registeredSuccessfully": "Successful registration!",
-    "motto": "A place where every message finds its home."
+    "motto": "A place where every message finds its home.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "username": "Username"
 }

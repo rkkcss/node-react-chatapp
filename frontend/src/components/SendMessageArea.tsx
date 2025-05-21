@@ -18,7 +18,6 @@ const SendMessageArea = ({ roomId }: SendMessageAreaProps) => {
         }
 
         if (socket) {
-            console.log("roomdi", roomId)
             socket.send(`/app/chat.sendMessage/${roomId}`, JSON.stringify({ text: message }));
         }
         setMessage("");

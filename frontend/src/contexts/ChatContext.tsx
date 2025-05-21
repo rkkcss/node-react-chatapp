@@ -5,7 +5,7 @@ import { myChatQuery } from '../queries/ChatRoomQueries';
 import { MessageType } from '../types/MessageType';
 
 type ChatContextType = {
-    chats: ChatRoomType[];
+    chats: ChatRoomType[] | [];
     addChat: (chat: ChatRoomType) => void;
     queryChats: () => Promise<void>;
     setLastMessage: (chatId: number, message: MessageType) => void;

@@ -53,7 +53,7 @@ const Registration = () => {
 
                         <Form.Item
                             name="login"
-                            label={t("login")}
+                            label={t("username")}
                             rules={[
                                 {
                                     required: true,
@@ -61,7 +61,7 @@ const Registration = () => {
                                 }
                             ]}
                         >
-                            <Input placeholder={t("login")} />
+                            <Input placeholder={t("username")} />
                         </Form.Item>
 
                         <Form.Item
@@ -111,7 +111,7 @@ const Registration = () => {
                                 },
                             ]}
                         >
-                            <Input.Password placeholder={t("email")} />
+                            <Input.Password placeholder={t("password")} />
                         </Form.Item>
 
                         <Form.Item

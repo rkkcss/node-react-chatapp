@@ -22,10 +22,10 @@ const LoginForm = () => {
             <div className="flex">
                 <div className="flex flex-col justify-center w-full flex-1">
                     <Form layout="vertical" onFinish={onFinish} className="">
-                        <Form.Item label={t("email")} name="username"
+                        <Form.Item label={t("username")} name="username"
                             rules={[{ required: true, message: t("requiredField") }]}
                         >
-                            <Input placeholder={t("emailPlaceholder")} />
+                            <Input placeholder={t("usernamePlaceholder")} />
                         </Form.Item>
                         <Form.Item label={t("password")} name="password"
                             rules={[{ required: true, message: t("requiredField") }]}

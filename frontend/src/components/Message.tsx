@@ -2,16 +2,18 @@ import dayjs from "dayjs"
 import { MessageType } from "../types/MessageType"
 import { useAuth } from "../contexts/AuthContext"
 import { Avatar, Tooltip } from "antd"
+import { ParticipantsType } from "../types/ParticipantType"
 
 type MessageProps = {
     message: MessageType,
     previousMessageTime?: Date,
     nextMessage?: MessageType,
-    previousMessage?: MessageType
+    previousMessage?: MessageType,
+    participants: ParticipantsType[] | null
 }
 
-const Message = ({ message, previousMessageTime }: MessageProps) => {
-    const { user } = useAuth()
+const Message = ({ message, previousMessageTime, participants }: MessageProps) => {
+    const { user } = useAuth();
 
     // Only show timestamp if more than 5 minutes have passed since previous
     const shouldShowTime = previousMessageTime
@@ -48,9 +50,25 @@ const Message = ({ message, previousMessageTime }: MessageProps) => {
                     </div>
                 </Tooltip>
             </div>
-            <div className="w-full justify-end flex">
-                <Avatar src={`https://api.dicebear.com/9.x/initials/svg?seed=${"asd"}`} className="!mb-1 !w-4 !h-4 " />
-            </div>
+
+            {participants?.map((p) => {
+                if (p.lastSeenMessage?.id === message.id && p.user.id !== user?.id) {
+                    return (
+
+                        <div key={p.user.id} className="flex justify-end">
+                            <Tooltip placement="left" title={`${p.user.firstName + " " + p.user.lastName} látta`}>
+                                <Avatar
+                                    src={`https://api.dicebear.com/9.x/initials/svg?seed=${p.user.firstName + p.user.lastName}`}
+                                    className="!mb-1 !w-4 !h-4"
+                                />
+
+                            </Tooltip>
+                        </div>
+                    );
+                }
+                return null;
+            })}
+
         </div>
     )
 }

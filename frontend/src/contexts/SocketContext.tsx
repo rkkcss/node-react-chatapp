@@ -82,7 +82,6 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
     const unsubscribeRoom = useCallback(() => {
         if (stompClient.current?.connected) {
             subscription.current?.unsubscribe();
-            console.log("unsub", stompClient);
         }
     }, []);
 
